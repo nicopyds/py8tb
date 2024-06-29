@@ -1,48 +1,15 @@
-import pprint
 import os
+import pprint
 from typing import Union
-import datetime
 
 import pandas as pd
 
-
-def get_watermark():
-
-    str_now = str(datetime.datetime.now())
-
-    year_month_day = str_now.split(" ")[0].replace("-", "_")
-    hour_minutes_seconds = str_now.split(" ")[1][:8].replace(":", "_")
-
-    return "_".join([year_month_day, hour_minutes_seconds])
-
-
-def unix_to_date_converter(ut: float) -> str:
-    return datetime.datetime.fromtimestamp(timestamp=ut).strftime("%Y-%m-%d %H:%M:%S")
-
-
-def get_file_creation_date(file_path: str, return_date: bool = True) -> float:
-
-    ut = os.path.getctime(file_path)
-
-    if return_date:
-        return unix_to_date_converter(ut=ut)
-    else:
-        return ut
-
-
-def get_file_modification_date(file_path: str, return_date: bool = True) -> float:
-
-    ut = os.path.getmtime(file_path)
-
-    if return_date:
-        return unix_to_date_converter(ut=ut)
-    else:
-        return ut
-
-
-def get_file_size_mb(file_path: str) -> float:
-    # return in mb
-    return os.stat(file_path).st_size / (1024 * 1024)
+from .utils import (
+    get_file_creation_date,
+    get_file_modification_date,
+    get_file_size_mb,
+    get_watermark,
+)
 
 
 class Indexator:
@@ -119,29 +86,15 @@ class Indexator:
     def save_df_to_excel(self, save_path: str) -> None:
 
         df_ = self.df
+        save_path_filename = os.path.join(save_path, f"df_{get_watermark()}.xlsx")
 
-        df_.to_excel(excel_writer=save_path)
+        df_.to_excel(excel_writer=save_path_filename)
 
     def save_df_to_parquet(self, save_path: str) -> None:
 
         df_ = self.df
+        save_path_filename = os.path.join(
+            save_path, f"df_{get_watermark()}.parquet.gzip"
+        )
 
-        df_.to_parquet(path=save_path)
-
-
-def main(folder_to_index: Union[list, str], save_path: str) -> None:
-
-    indexator = Indexator(folder_to_index=folder_to_index)
-    df = indexator.df
-    pprint.pprint(df.head())
-    indexator.save_df_to_parquet(save_path=save_path)
-
-
-if __name__ == "__main__":
-
-    CWD = os.getcwd()
-    SAVE_PATH = os.path.join(CWD, f"df_{get_watermark()}.parquet.gzip")
-
-    FOLDER_TO_INDEX = ["/Volumes/MUPU 4TB 1", "/Volumes/MUPU 4TB 2"]
-
-    main(folder_to_index=FOLDER_TO_INDEX, save_path=SAVE_PATH)
+        df_.to_parquet(path=save_path_filename)

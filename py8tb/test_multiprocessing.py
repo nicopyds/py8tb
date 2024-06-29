@@ -20,7 +20,6 @@ def get_len_path_splitted_photos(l):
     return r
 
 
-
 def main():
     pool = mp.Pool(processes=cores - 1)
     results = pool.map(func=get_len_path_splitted_photos, iterable=splitted_photos)
