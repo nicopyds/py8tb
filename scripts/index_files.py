@@ -1,6 +1,8 @@
 import os
 import sys
 
+import argparse
+
 import pprint
 from typing import Union
 
@@ -23,6 +25,12 @@ def main(folder_to_index: Union[list, str], save_path: str) -> None:
 
 if __name__ == "__main__":
 
-    FOLDER_TO_INDEX = ["/Volumes/MUPU 4TB 1", "/Volumes/MUPU 4TB 2"]
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-p", "--paths", nargs="+", help="A list of paths to parse", required=True
+    )
+    args = vars(parser.parse_args())
+
+    FOLDER_TO_INDEX = args["paths"]
 
     main(folder_to_index=FOLDER_TO_INDEX, save_path=SAVE_PATH)
