@@ -1,3 +1,4 @@
+alembic==1.13.2
 anyio==4.3.0
 appnope==0.1.4
 argon2-cffi==23.1.0
@@ -18,6 +19,7 @@ charset-normalizer==3.3.2
 click==8.1.7
 cmdstanpy==1.2.2
 colorcet==3.1.0
+colorlog==6.8.2
 comm==0.2.2
 contourpy==1.2.0
 cramjam==2.8.3
@@ -71,6 +73,7 @@ jupyterlab_server==2.25.4
 jupyterlab_widgets==3.0.10
 kiwisolver==1.4.5
 linkify-it-py==2.0.3
+Mako==1.3.5
 Markdown==3.6
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
@@ -89,6 +92,7 @@ notebook==6.5.6
 notebook_shim==0.2.4
 numpy==1.26.4
 openpyxl==3.1.2
+optuna==3.6.1
 overrides==7.7.0
 packaging==24.0
 pandas==2.2.1
@@ -100,6 +104,7 @@ pathspec==0.12.1
 patsy==0.5.6
 pexpect==4.9.0
 pillow==10.2.0
+pillow_heif==0.18.0
 platformdirs==4.2.0
 plotly==5.20.0
 polars==0.20.26
@@ -131,9 +136,11 @@ scipy==1.12.0
 seaborn==0.13.2
 Send2Trash==1.8.2
 six==1.16.0
+skforecast==0.12.1
 skrub==0.1.0
 sniffio==1.3.1
 soupsieve==2.5
+SQLAlchemy==2.0.31
 stack-data==0.6.3
 stanio==0.5.0
 statsmodels==0.14.1
