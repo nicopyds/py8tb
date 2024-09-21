@@ -1,6 +1,7 @@
 import os
+from typing import Union
 import pandas as pd
-from .config import TOP_FILE_EXTENSIONS
+from py8tb.config import TOP_FILE_EXTENSIONS
 
 
 def custom_mapping(file_extension):
@@ -42,3 +43,12 @@ def preprocessing_pipeline(df=None, path=None):
     )
 
     return df
+
+def get_photos_df(df:Union[None, pd.DataFrame], path:Union[str, None]) -> pd.DataFrame:
+    df = preprocessing_pipeline(df=df, path=path)
+    photos = df[df["FileType"] == "photo"]
+    return photos
+
+
+
+

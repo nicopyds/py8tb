@@ -1,16 +1,7 @@
-import os
-import sys
-
 import argparse
 
 import pprint
 from typing import Union
-
-FILE_PATH = __file__
-PY8TB_PATH = os.path.dirname(os.path.dirname(FILE_PATH))
-SAVE_PATH = os.path.join(PY8TB_PATH, "data")
-
-sys.path.insert(0, PY8TB_PATH)
 
 from py8tb import Indexator
 
@@ -29,8 +20,11 @@ if __name__ == "__main__":
     parser.add_argument(
         "-p", "--paths", nargs="+", help="A list of paths to parse", required=True
     )
+    parser.add_argument(
+        "-s", "--save_path",  help="Path where to save the file", required=True
+    )
     args = vars(parser.parse_args())
 
     FOLDER_TO_INDEX = args["paths"]
-
+    SAVE_PATH = args["save_path"]
     main(folder_to_index=FOLDER_TO_INDEX, save_path=SAVE_PATH)

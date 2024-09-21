@@ -15,7 +15,6 @@ from .utils import (
 class Indexator:
 
     def __init__(self, folder_to_index: Union[list, str]) -> None:
-
         self.__assert_folder_to_index(folder_to_index=folder_to_index)
         folder_to_index = self.__check_if_folder_to_index_is_list(
             folder_to_index=folder_to_index
