@@ -1,52 +1,49 @@
+import argparse
 import os
-import sys
 
-import datetime
-import pickle
 import numpy as np
 import pandas as pd
 import multiprocessing as mp
 
-# SAMPLE = 10_000
+from py8tb import parallel_ptb, get_photos_df
+
 CORES = mp.cpu_count()
 
-FILE_PATH = __file__
-PY8TB_PATH = os.path.dirname(os.path.dirname(FILE_PATH))
-SAVE_PATH = os.path.join(PY8TB_PATH, "data")
 
-PHOTOS = pd.read_parquet(os.path.join(SAVE_PATH, "photos.parquet.gzip"))
-# PATHS = PHOTOS["FilePath"].sample(SAMPLE).values.tolist()
-PATHS = PHOTOS["FilePath"].values.tolist()
+def main(photo_df):
 
-SPLITTED_PATHS = np.array_split(ary=PATHS, indices_or_sections=CORES)
+    photos = get_photos_df(path=photo_df, df=None)
 
-sys.path.insert(0, PY8TB_PATH)
+    paths = photos["FilePath"]
+    SPLITTED_PATHS = np.array_split(paths, CORES)
 
-from py8tb import parallel_ptb
-
-
-def main():
     pool = mp.Pool(processes=CORES)
     result_list = pool.map(func=parallel_ptb, iterable=SPLITTED_PATHS)
+
     pool.close()
     pool.join()
+
     return result_list
 
 
 if __name__ == "__main__":
 
-    print(len(PATHS))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--path", help="Path to the photo df", required=True)
+    parser.add_argument(
+        "-s", "--save_path", help="Path where to save the file", required=True
+    )
+    args = vars(parser.parse_args())
 
-    st = datetime.datetime.now()
+    PHOTO_DF = args["path"]
+    SAVE_PATH = args["save_path"]
 
-    results = main()
-    results = sum(results, [])
-    print(len(results))
+    result_list = main(PHOTO_DF)
+    result_dfs = map(
+        lambda list_: pd.DataFrame(data=list_, columns=["FilePath", "Sha256"]),
+        result_list,
+    )
+    result_dfs = list(result_dfs)
 
-    with open(os.path.join(SAVE_PATH, "photos_sha256.pkl"), "wb") as f:
-        pickle.dump(results, f)
-
-    et = datetime.datetime.now()
-    tt = et - st
-    # print(f"Total time took {tt} in seconds for {SAMPLE} samples!")
-    print(f"Total time took {tt} in seconds!")
+    photos = pd.concat(result_dfs, axis=1)
+    photos.to_parquet(os.path.join(SAVE_PATH, "sha256.parquet.gzip"))

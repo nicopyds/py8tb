@@ -31,6 +31,6 @@ class PhotoToBytes:
         return result_list
 
 
-def parallel_ptb(splitted_paths):
+def parallel_ptb(splitted_paths: list) -> list:
     ptb = PhotoToBytes(path=splitted_paths)
     return ptb.create_sha256()

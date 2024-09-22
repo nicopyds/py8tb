@@ -21,7 +21,7 @@ if __name__ == "__main__":
         "-p", "--paths", nargs="+", help="A list of paths to parse", required=True
     )
     parser.add_argument(
-        "-s", "--save_path",  help="Path where to save the file", required=True
+        "-s", "--save_path", help="Path where to save the file", required=True
     )
     args = vars(parser.parse_args())
 
