@@ -1,5 +1,4 @@
 import os
-import pprint
 from typing import Union
 
 import pandas as pd
@@ -10,6 +9,8 @@ from .utils import (
     get_file_size_mb,
     get_watermark,
 )
+
+get_watermark()
 
 
 class Indexator:

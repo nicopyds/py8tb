@@ -30,13 +30,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--path", help="Path to the photo df", required=True)
-    parser.add_argument(
-        "-s", "--save_path", help="Path where to save the file", required=True
-    )
     args = vars(parser.parse_args())
 
     PHOTO_DF = args["path"]
-    SAVE_PATH = args["save_path"]
 
     result_list = main(PHOTO_DF)
     result_dfs = map(
@@ -45,5 +41,13 @@ if __name__ == "__main__":
     )
     result_dfs = list(result_dfs)
 
-    photos = pd.concat(result_dfs, axis=1)
-    photos.to_parquet(os.path.join(SAVE_PATH, "sha256.parquet.gzip"))
+    photos = pd.concat(result_dfs, axis=0)
+    df = pd.read_parquet(PHOTO_DF)
+    
+    df = pd.concat([df, photos], on = "FilePath")
+    print(df.head())
+
+
+
+
+
