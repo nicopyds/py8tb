@@ -43,11 +43,6 @@ if __name__ == "__main__":
 
     photos = pd.concat(result_dfs, axis=0)
     df = pd.read_parquet(PHOTO_DF)
-    
-    df = pd.concat([df, photos], on = "FilePath")
+
+    df = pd.concat([df, photos], on="FilePath")
     print(df.head())
-
-
-
-
-
