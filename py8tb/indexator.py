@@ -42,7 +42,7 @@ class Indexator:
         indexed_files = []
 
         for full_dir in self.folder_to_index:
-            for full_dir, subdirs, file_names in os.walk(full_dir):
+            for full_dir, _, file_names in os.walk(full_dir):
                 for file_name in file_names:
                     file_path = os.path.join(full_dir, file_name)
 
@@ -79,9 +79,13 @@ class Indexator:
         if not hasattr(self, "_df"):
             self._df = self.__indexed_files_to_df()
 
-        df_ = self._df.copy(deep=True)
+        df = self._df.copy(deep=True)
 
-        return df_
+        return df
+
+    @df.setter
+    def df(self, new_df: pd.DataFrame) -> None:
+        self._df = new_df
 
     def save_df_to_excel(self, save_path: str) -> None:
 
