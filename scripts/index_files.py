@@ -14,7 +14,12 @@ import multiprocessing as mp
 CORES = mp.cpu_count()
 
 
-from py8tb import Indexator, parallel_ptb, get_photos_df
+from py8tb import (
+        Indexator,
+        parallel_ptb, 
+        get_photos_df,
+        create_folder
+)
 
 
 def main(folder_to_index: Union[list, str], save_path: str) -> None:
@@ -43,6 +48,7 @@ def main(folder_to_index: Union[list, str], save_path: str) -> None:
 
     df = pd.merge(left=df, right=photos, on="FilePath", how = "left")
     indexator.df = df
+    create_folder(path=save_path)
     indexator.save_df_to_parquet(save_path=save_path)
 
 

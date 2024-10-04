@@ -9,3 +9,5 @@ __pycache__
 *.pkl
 *.csv
 testing_with_real_data/
+real_data/
+data/

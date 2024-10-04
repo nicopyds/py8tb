@@ -10,18 +10,16 @@ from .utils import (
     get_watermark,
 )
 
-get_watermark()
-
-
 class Indexator:
 
-    def __init__(self, folder_to_index: Union[list, str]) -> None:
+    def __init__(self, folder_to_index: Union[list, str], watermark:bool=False) -> None:
         self.__assert_folder_to_index(folder_to_index=folder_to_index)
         folder_to_index = self.__check_if_folder_to_index_is_list(
             folder_to_index=folder_to_index
         )
 
         self.folder_to_index = folder_to_index
+        self.watermark=watermark
 
     def __assert_folder_to_index(self, folder_to_index: Union[list, str]) -> None:
 
@@ -87,18 +85,31 @@ class Indexator:
     def df(self, new_df: pd.DataFrame) -> None:
         self._df = new_df
 
+    def __get_df_name(self) -> str:
+        if self.watermark:
+            return f"df_{get_watermark()}"
+
+        else:
+            return "df"
+
     def save_df_to_excel(self, save_path: str) -> None:
 
         df_ = self.df
-        save_path_filename = os.path.join(save_path, f"df_{get_watermark()}.xlsx")
-
+        
+        save_path_filename = os.path.join(save_path, f"{self.__get_df_name()}.xlsx")
         df_.to_excel(excel_writer=save_path_filename)
 
     def save_df_to_parquet(self, save_path: str) -> None:
 
         df_ = self.df
         save_path_filename = os.path.join(
-            save_path, f"df_{get_watermark()}.parquet.gzip"
+            save_path, f"{self.__get_df_name()}.parquet.gzip"
         )
 
         df_.to_parquet(path=save_path_filename)
+
+
+
+
+
+

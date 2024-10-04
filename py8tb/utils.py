@@ -1,6 +1,9 @@
 import os
 import datetime
 
+def create_folder(path):
+    if not os.path.isdir(path):
+        os.makedirs(path)
 
 def get_watermark():
 
