@@ -3,23 +3,26 @@ from typing import Union
 
 import pandas as pd
 
-from .utils import (
+from py8tb.utils import (
     get_file_creation_date,
     get_file_modification_date,
     get_file_size_mb,
     get_watermark,
 )
 
+
 class Indexator:
 
-    def __init__(self, folder_to_index: Union[list, str], watermark:bool=False) -> None:
+    def __init__(
+        self, folder_to_index: Union[list, str], watermark: bool = False
+    ) -> None:
         self.__assert_folder_to_index(folder_to_index=folder_to_index)
         folder_to_index = self.__check_if_folder_to_index_is_list(
             folder_to_index=folder_to_index
         )
 
         self.folder_to_index = folder_to_index
-        self.watermark=watermark
+        self.watermark = watermark
 
     def __assert_folder_to_index(self, folder_to_index: Union[list, str]) -> None:
 
@@ -95,7 +98,7 @@ class Indexator:
     def save_df_to_excel(self, save_path: str) -> None:
 
         df_ = self.df
-        
+
         save_path_filename = os.path.join(save_path, f"{self.__get_df_name()}.xlsx")
         df_.to_excel(excel_writer=save_path_filename)
 
@@ -107,9 +110,3 @@ class Indexator:
         )
 
         df_.to_parquet(path=save_path_filename)
-
-
-
-
-
-

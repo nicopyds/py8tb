@@ -11,6 +11,7 @@ def parse_date(filename, split_by_text):
     else:
         return filename
 
+
 def extract_creation_date_from_photo_name(row):
 
     creation_date = row["CreationDate"]
@@ -28,6 +29,7 @@ def extract_creation_date_from_photo_name(row):
 
     else:
         return filename
+
 
 def parse_date_with_regex(filename):
 
