@@ -14,8 +14,8 @@ def parse_date(filename, split_by_text):
 
 def extract_creation_date_from_photo_name(row):
 
-    creation_date = row["CreationDate"]
-    last_modification_date = row["LastModificationDate"]
+    row["CreationDate"]
+    row["LastModificationDate"]
     filename = row["FileName"]
 
     if "IMG_" in filename:

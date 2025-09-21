@@ -4,7 +4,6 @@ import pprint
 
 import argparse
 
-import pandas as pd
 from py8tb import get_photos_df
 
 

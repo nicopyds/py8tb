@@ -19,13 +19,18 @@ class PhotoToBytes:
 
         return bytearray(self.open_contents(path=path))
 
-    def create_sha256(self):
+    @staticmethod
+    def photo_to_hash(path):
+        hash = sha256(string=PhotoToBytes.content_to_bytes(path=path)).hexdigest()
+        return hash
+
+    def create_sha256_list(self):
 
         result_list = []
 
         for path_ in self.path:
-            hash_file = sha256(string=self.content_to_bytes(path=path_)).hexdigest()
-            t = (path_, hash_file)
+            hash = self.photo_to_hash(path=path_)
+            t = (path_, hash)
             result_list.append(t)
 
         return result_list
@@ -33,4 +38,4 @@ class PhotoToBytes:
 
 def parallel_ptb(splitted_paths: list) -> list:
     ptb = PhotoToBytes(path=splitted_paths)
-    return ptb.create_sha256()
+    return ptb.create_sha256_list()
