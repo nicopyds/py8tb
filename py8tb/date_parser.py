@@ -1,3 +1,10 @@
+"""
+Lo vamos a necesitar más adelante en la tercera fase del proyecto
+Cuando vamos a reorganizar todos los ficheros/fotos/videos etc
+En función de su fecha de creación
+"""
+
+
 def parse_date(filename, split_by_text):
 
     splitted_filename = filename.split(split_by_text)[1].split(".")[0]
