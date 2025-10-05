@@ -1,5 +1,4 @@
 import os
-from typing import Union
 import pandas as pd
 from py8tb.config import TOP_FILE_EXTENSIONS
 
@@ -14,7 +13,6 @@ def custom_mapping(file_extension):
     elif file_extension == ".DS_Store":
         return "mac_file_organizer"
     else:
-        print(file_extension)
         return "na"
 
 

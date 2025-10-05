@@ -3,8 +3,8 @@ This script allows you to calculate the hash of a Video file
 using the macOS and Linux utility shasum - a 256
 """
 
-import time
 import subprocess
+import numpy as np
 
 
 def _subprocess_result_to_tuple(result):
@@ -22,10 +22,21 @@ def _subprocess_result_to_tuple(result):
 
 def file_to_hash(path) -> tuple:
 
+    random_value = np.random.rand()
     command = f"shasum -a 256 '{path}'"
-    result = subprocess.check_output(command, shell=True, text=True)
 
-    return _subprocess_result_to_tuple(result=result)
+    if random_value < 0.01:
+        print("Working with this command")
+        print(command)
+
+    try:
+        result = subprocess.check_output(command, shell=True, text=True)
+        result = _subprocess_result_to_tuple(result=result)
+
+        return result
+
+    except Exception as e:
+        return (path, e)
 
 
 def apply_hast_to_list_of_paths(list_of_paths) -> list:
@@ -35,6 +46,5 @@ def apply_hast_to_list_of_paths(list_of_paths) -> list:
     for path in list_of_paths:
 
         r.append(file_to_hash(path=path))
-        time.sleep(0.5)
 
     return r

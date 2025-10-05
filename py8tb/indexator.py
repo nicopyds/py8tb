@@ -94,19 +94,3 @@ class Indexator:
 
         else:
             return "df"
-
-    def save_df_to_excel(self, save_path: str) -> None:
-
-        df_ = self.df
-
-        save_path_filename = os.path.join(save_path, f"{self.__get_df_name()}.xlsx")
-        df_.to_excel(excel_writer=save_path_filename)
-
-    def save_df_to_parquet(self, save_path: str) -> None:
-
-        df_ = self.df
-        save_path_filename = os.path.join(
-            save_path, f"{self.__get_df_name()}.parquet.gzip"
-        )
-
-        df_.to_parquet(path=save_path_filename)

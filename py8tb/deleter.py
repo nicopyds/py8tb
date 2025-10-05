@@ -4,8 +4,6 @@ import pprint
 
 import argparse
 
-from py8tb import get_photos_df
-
 
 class FileDeleter:
 
@@ -14,7 +12,8 @@ class FileDeleter:
         self.___load_df()
 
     def ___load_df(self):
-        self.df = get_photos_df(df=None, path=self.path)
+        pass
+        # self.df = get_photos_df(df=None, path=self.path)
 
     def report(self):
         total_photos = self.df["FileType"].value_counts().iloc[0]
