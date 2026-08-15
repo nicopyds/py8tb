@@ -39,7 +39,7 @@ def file_to_hash(path) -> tuple:
         return (path, e)
 
 
-def apply_hast_to_list_of_paths(list_of_paths) -> list:
+def apply_hash_to_list_of_paths(list_of_paths) -> list:
 
     r = []
 

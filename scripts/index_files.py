@@ -20,7 +20,7 @@ DIR_PATH = os.path.dirname(FILE_PATH)
 from py8tb import (
     Indexator,
     create_folder,
-    apply_hast_to_list_of_paths,
+    apply_hash_to_list_of_paths,
     preprocessing_pipeline,
     get_watermark,
 )
@@ -49,7 +49,7 @@ def main(folder_to_index: Union[list, str], save_path: str) -> None:
 
     pool = mp.Pool(processes=CORES)
 
-    result_list = pool.map(func=apply_hast_to_list_of_paths, iterable=SPLITTED_PATHS)
+    result_list = pool.map(func=apply_hash_to_list_of_paths, iterable=SPLITTED_PATHS)
 
     pool.close()
     pool.join()
