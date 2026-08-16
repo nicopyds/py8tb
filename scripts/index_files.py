@@ -43,30 +43,30 @@ def main(folder_to_index: Union[list, str], save_path: str) -> None:
     file_name_df = f"df_{watermark}.csv"
     df.to_csv(os.path.join(save_path, file_name_df), index=False)
 
-    paths = df["FilePath"]
-
-    SPLITTED_PATHS = np.array_split(paths, CORES)
-
-    pool = mp.Pool(processes=CORES)
-
-    result_list = pool.map(func=apply_hash_to_list_of_paths, iterable=SPLITTED_PATHS)
-
-    pool.close()
-    pool.join()
-
-    # fmt: off
-    result_dfs = pd.concat(list(map(lambda list_: pd.DataFrame(data=list_, columns=["FilePath", "Sha256"]), result_list)), axis = 0)
-    # fmt: on
-
-    file_name_results = f"results_dfs_{watermark}.csv"
-    result_dfs.to_csv(os.path.join(save_path, file_name_results), index=False)
-
-    merged = pd.merge(left=df, right=result_dfs, on="FilePath", how="left")
-
-    create_folder(path=save_path)
-
-    file_name_csv = f"merged_{watermark}.csv"
-    merged.to_csv(os.path.join(save_path, file_name_csv), index=False)
+#    paths = df["FilePath"]
+#
+#    SPLITTED_PATHS = np.array_split(paths, CORES)
+#
+#    pool = mp.Pool(processes=CORES)
+#
+#    result_list = pool.map(func=apply_hash_to_list_of_paths, iterable=SPLITTED_PATHS)
+#
+#    pool.close()
+#    pool.join()
+#
+#    # fmt: off
+#    result_dfs = pd.concat(list(map(lambda list_: pd.DataFrame(data=list_, columns=["FilePath", "Sha256"]), result_list)), axis = 0)
+#    # fmt: on
+#
+#    file_name_results = f"results_dfs_{watermark}.csv"
+#    result_dfs.to_csv(os.path.join(save_path, file_name_results), index=False)
+#
+#    merged = pd.merge(left=df, right=result_dfs, on="FilePath", how="left")
+#
+#    create_folder(path=save_path)
+#
+#    file_name_csv = f"merged_{watermark}.csv"
+#    merged.to_csv(os.path.join(save_path, file_name_csv), index=False)
 
 
 if __name__ == "__main__":
